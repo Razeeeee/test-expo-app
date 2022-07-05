@@ -1,26 +1,18 @@
-import { useCallback, useMemo, useRef, forwardRef, useImperativeHandle } from 'react';
+import { useMemo, forwardRef } from 'react';
 import { View, StyleSheet } from 'react-native';
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
 
-const PureModal = forwardRef((props: any, ref) => {
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+const PureModal = forwardRef<BottomSheetModal>((props: any, ref) => {
   const snapPoints = useMemo(() => props.snapPoints, []);
-
-  const openModal = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
-  useImperativeHandle(ref, () => ({
-    openModal,
-  }));
 
   return (
     <BottomSheetModalProvider>
       <View style={styles.container}>
         <BottomSheetModal
-          ref={bottomSheetModalRef}
+          ref={ref}
           index={1}
           snapPoints={snapPoints}
           backgroundStyle={styles.background}
